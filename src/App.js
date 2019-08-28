@@ -15,10 +15,8 @@ class App extends Component {
       events 
    };
     this.handleSelect = this.handleSelect.bind(this);
+    this.editEvent = this.editEvent.bind(this);
   }
-  // state = {
-  //    events 
-  // };
 
   componentDidMount() {
     let todayStart = new Date().setHours(0,0,0,0);
@@ -28,6 +26,37 @@ class App extends Component {
         return alert(event.title + "\nStarts: " + event.start + "\nEnds: " + event.end)
       }
     })
+  }
+
+  editEvent = ({ start, end, title }) => {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    var message = document.getElementsByClassName("message")[0];
+
+    // this.props.eventMessage = title;
+    console.log(title);
+
+    // When the user clicks the button, open the modal 
+    modal.style.display = "block";
+    message.innerHTML = title;
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    // calendar.getEventById( id ).remove()
   }
 
   handleSelect = ({ start, end }) => {
@@ -76,6 +105,12 @@ class App extends Component {
     
     return (
       <div className="App">
+        <div id="myModal" className="modal">
+          <div className="modal-content">
+            <span className="close">&times;</span>
+            <p className="message"></p>
+          </div>
+        </div>
         {/* <Calendar
           localizer={localizer}
           defaultDate={new Date()}
@@ -96,7 +131,8 @@ class App extends Component {
           defaultView="month"
           scrollToTime={new Date(1970, 1, 1, 6)}
           // defaultDate={new Date(2015, 3, 12)}
-          onSelectEvent={event => alert(event.title + "\n" +  event.start + "\n" + event.end)}
+          // onSelectEvent={event => alert(event.title + "\n" +  event.start + "\n" + event.end)}
+          onSelectEvent={this.editEvent}
           onSelectSlot={this.handleSelect}
           style={{ height: "90vh" }}
         />
