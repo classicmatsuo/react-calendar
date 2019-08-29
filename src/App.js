@@ -16,7 +16,7 @@ class App extends Component {
    };
     this.handleSelect = this.handleSelect.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
-    this.doubleClick = this.doubleClick.bind(this);
+    // this.doubleClick = this.doubleClick.bind(this);
   }
 
   componentDidMount() {
@@ -38,9 +38,9 @@ class App extends Component {
     })
   }
 
-  doubleClick = (event) => {
-    window.alert('doubleclicked');
-  }
+  // doubleClick = (event) => {
+  //   window.alert('doubleclicked');
+  // }
 
   deleteEvent = (event, { start, end, title }) => {
     const r = window.confirm("Would you like to remove this event?")
@@ -63,8 +63,8 @@ class App extends Component {
         && 
         start.getTime() < event['end'].getTime()
       ){
-        console.log(start);
-        console.log('firing event');
+        // console.log(start);
+        // console.log('firing event');
         return i++;
       }
     })
@@ -81,8 +81,6 @@ class App extends Component {
     )
     {
       const title = window.prompt('New Event name')
-      console.log(start + ' ' + i + ' add it');
-      console.log(new Date().setHours(10,0,1,0) );
       if (title){
         this.setState({
           events: [
@@ -97,9 +95,6 @@ class App extends Component {
       }
     } else {
       window.alert('Cannot create events in the past or that have overlapping event times');
-      console.log(i + 'cant add it');
-      console.log('rah' + this.state.events.find(event => event['start'].setHours(0,0,0,0) === start.getTime()));
-
     }
   }
 
@@ -114,7 +109,7 @@ class App extends Component {
           events={this.state.events}
           defaultView="month"
           onSelectEvent={this.deleteEvent}
-          onDoubleClickEvent={this.doubleClick}
+          // onDoubleClickEvent={this.doubleClick}
           onSelectSlot={this.handleSelect}
           style={{ height: "90vh" }}
         />
