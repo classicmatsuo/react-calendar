@@ -59,9 +59,13 @@ class App extends Component {
     var i = 0;
     this.state.events.forEach(event => {
       if (
-        start.getTime() > event['start'].getTime()
+        (start.getTime() > event['start'].getTime()
         && 
-        start.getTime() < event['end'].getTime()
+        start.getTime() < event['end'].getTime())
+        ||
+        (start.getTime() < event['start'].getTime()
+        &&
+        end.getTime() < event['end'].getTime() && end.getTime() > event['start'].getTime())
       ){
         // console.log(start);
         // console.log('firing event');
