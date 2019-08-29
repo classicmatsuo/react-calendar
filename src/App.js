@@ -16,6 +16,7 @@ class App extends Component {
    };
     this.handleSelect = this.handleSelect.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
+    this.doubleClick = this.doubleClick.bind(this);
   }
 
   componentDidMount() {
@@ -37,35 +38,11 @@ class App extends Component {
     })
   }
 
+  doubleClick = (event) => {
+    window.alert('doubleclicked');
+  }
+
   deleteEvent = (event, { start, end, title }) => {
-    // // Get the modal
-    // var modal = document.getElementById("myModal");
-    // // Get the button that opens the modal
-    // var btn = document.getElementById("myBtn");
-    // // Get the <span> element that closes the modal
-    // var span = document.getElementsByClassName("close")[0];
-
-    // var message = document.getElementsByClassName("message")[0];
-
-    // // this.props.eventMessage = title;
-    // console.log(title);
-
-    // // When the user clicks the button, open the modal 
-    // modal.style.display = "block";
-    // message.innerHTML = title + "<br/> Start: " + start + "<br/> End: " + end
-    // + "<br/><button>Edit</button> <button onclick={deleteEvent}>Delete</button>";
-
-    // // When the user clicks on <span> (x), close the modal
-    // span.onclick = function() {
-    //   modal.style.display = "none";
-    // }
-
-    // // When the user clicks anywhere outside of the modal, close it
-    // window.onclick = function(event) {
-    //   if (event.target == modal) {
-    //     modal.style.display = "none";
-    //   }
-    // }
     const r = window.confirm("Would you like to remove this event?")
     if(r === true){
      
@@ -92,7 +69,8 @@ class App extends Component {
       }
     })
 
-    if (start >= new Date().setHours(0,0,0,0) 
+    if (
+      (start >= new Date().setHours(0,0,0,0) )
       &&
       (this.state.events.find(event => event['start'].getTime() === start.getTime()) === undefined)
       && 
@@ -103,6 +81,8 @@ class App extends Component {
     )
     {
       const title = window.prompt('New Event name')
+      console.log(start + ' ' + i + ' add it');
+      console.log(new Date().setHours(10,0,1,0) );
       if (title){
         this.setState({
           events: [
@@ -117,6 +97,9 @@ class App extends Component {
       }
     } else {
       window.alert('Cannot create events in the past or that have overlapping event times');
+      console.log(i + 'cant add it');
+      console.log('rah' + this.state.events.find(event => event['start'].setHours(0,0,0,0) === start.getTime()));
+
     }
   }
 
@@ -124,35 +107,14 @@ class App extends Component {
     
     return (
       <div className="App">
-        {/* <div id="myModal" className="modal">
-          <div className="modal-content">
-            <span className="close">&times;</span>
-            <p className="message"></p>
-          </div>
-        </div> */}
-        {/* <Calendar
-          localizer={localizer}
-          defaultDate={new Date()}
-          defaultView="month"
-          events={this.state.events}
-          style={{ height: "100vh" }}
-        /> */}
-        {/* <ExampleControlSlot.Entry waitForOutlet>
-          <strong>
-            Click an event to see more info, or drag the mouse over the calendar
-            to select a date/time range.
-          </strong>
-        </ExampleControlSlot.Entry> */}
         <Calendar
           popup
           selectable
           localizer={localizer}
           events={this.state.events}
           defaultView="month"
-          scrollToTime={new Date(1970, 1, 1, 6)}
-          // defaultDate={new Date(2015, 3, 12)}
-          // onSelectEvent={event => alert(event.title + "\n" +  event.start + "\n" + event.end)}
           onSelectEvent={this.deleteEvent}
+          onDoubleClickEvent={this.doubleClick}
           onSelectSlot={this.handleSelect}
           style={{ height: "90vh" }}
         />
